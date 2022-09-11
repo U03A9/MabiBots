@@ -95,7 +95,7 @@ ifMsgBox, OK
             }
         }
 
-        if (inspiration_loop == True and A_TickCount >= inspiration_trigger or inspiration_triggered != True){
+        if (inspiration_loop == True and A_TickCount >= inspiration_trigger or inspiration_triggered){
             ; Turn Mediation off
             send {9}
             Sleep, %cast_gap%
@@ -128,7 +128,7 @@ ifMsgBox, OK
 
         }
         
-        if (snapcast_loop == True and A_TickCount > snapcast_trigger or snapcast_triggered != True){
+        if (snapcast_loop == True and A_TickCount > snapcast_trigger){
             ; Snap cast
             send {1}
             Sleep, %cast_gap%
