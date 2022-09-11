@@ -28,7 +28,7 @@ This bot will automatically cast Snapcast and use a magic skill. It will attempt
 ### Shield loop
 This bot will automatically loop through `Ice Shield`, `Lightning Shield`, and `Fire Shield`. When this is enabled you will do one loop of all three shields, then check for `Inspiration` or `Snapcast` (if enabled) before resuming. This will allow you to run all 3 loops together.
 
-- Image unavailabe. Use your imagination, I didn't bother recording this one.
+- Image unavailabe. Use your imagination. I didn't bother recording this one.
 
 #### Coming soon
 - GUI where you can toggle which skill(s) to train
