@@ -8,14 +8,17 @@ AutoHotKey bot to automate the skill training grind in Mabinogi. These bots can 
 
 ### Startup config
 When starting this bot, you will be prompted for your mana pool and the amount of mana the magic skill you are using for burn. This is used to calculate how many times the loop should cast the spell in order to bring you below 10% MP.
+
 ![](./images/startup.gif)
 
 ### Inspiration loop
 This bot will automatically loop through magic to burn off your MP and cast Inspiration.
+
 ![](./images/inspiration.gif)
 
 ### Snapcast loop
 This bot will automatically cast Snapcast and use a magic skill. It will attempt to target a nearby mob and use the skill before cancelling
+
 ![](./images/snapcast.gif)
 
 ### Shield loop
