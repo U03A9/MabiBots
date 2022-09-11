@@ -3,7 +3,7 @@ AutoHotKey bot to automate the skill training grind in Mabinogi. These bots can 
 
 ## How to use
 - Install AutoHotKey from [here](https://www.autohotkey.com)
-- Right click the `.ahk file` and select `compile` to turn the script into a `exe` (helps prevent anti-cheat from seeing AHK running)
+- Right click the `.ahk` file and select `compile` to turn the script into a `.exe` (helps prevent anti-cheat from seeing AHK running)
 - Run compiled executable as an administrator (required for Mabinogi to detect input)
 
 ### Startup config
