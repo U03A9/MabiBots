@@ -8,7 +8,7 @@ AutoHotKey bot to automate the skill training grind in Mabinogi. These bots can 
 
 ### Startup config
 When starting this bot, you will be prompted for
-- Total Mana Pool
+- Your characters total MP
 - MP cost of magic skill you are using for burn. 
 
 This information is used to calculate how many times the loop should cast the spell in order to bring you below 10% MP.
