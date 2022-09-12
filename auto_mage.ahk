@@ -45,7 +45,7 @@ snapcast_trigger := A_TickCount + snapcast_cooldown
 ; ######################################### ;
 ;  CHANGE ONLY SETTINGS BETWEEN THE LINEs. 
 
-shield_loop := False
+shield_loop := True
 inspiration_loop := True
 snapcast_loop := True
 
