@@ -8,9 +8,14 @@
 ;
 ; v1.0.0
 
+#SingleInstance Force \; Only allow one instance
 #UseHook ; Improves response time of key presses
 #NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
 ; #Warn  ; Enable warnings to assist with detecting common errors.
+
+If not A_IsAdmin
+    Run *RunAs "%A_AhkPath%" "%A_ScriptFullPath%" ; Run script as admin
+
 
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
@@ -69,10 +74,10 @@ ifMsgBox, OK
         WinActivate, Mabinogi
 
         ; Randomize timers before new loop
-        Random, cast_gap, 850, 1300
+        Random, cast_gap, 1250, 1500
         Random, inspiration_cooldown, 260000, 260500
         Random, snapcast_cooldown, 125000, 127500
-        Random, shield_expiration_time, 36000, 36500
+        Random, shield_expiration_time, 13500, 14500
 
         if (shield_loop == True){
             ; Set script start time
@@ -82,45 +87,23 @@ ifMsgBox, OK
             while (A_tickcount < (start_time + shield_expiration_time)){
                 ; Fire Shield
                 send {5}
-                Sleep, (shield_expiration_time / 3)  
+                Sleep, (shield_expiration_time)  
 
                 ; Ice Shield
                 send {6}
-                Sleep, (shield_expiration_time / 3)
+                Sleep, (shield_expiration_time)
 
                 ; Lightning Shield
                 send {7}
-                Sleep, (shield_expiration_time / 3)
+                Sleep, (shield_expiration_time)
 
             }
         }
 
-        if (inspiration_loop == True and A_TickCount >= inspiration_trigger or inspiration_triggered != True){
-            ; Turn Mediation off
-            send {9}
-            Sleep, %cast_gap%
-
-            ; Sets counter
-            cast_count := 0
-            
-            ; Burn out mana
-            while cast_count < max_cast_count{
-                ; Cast magic and cancel
-                send {4}
-                Sleep, 2500, 3000
-                send {x}
-                Sleep, 800, 1200
-
-                ; Cancel skill and increment
-                cast_count += 1
-            }
-
+        if (inspiration_loop == True and A_TickCount >= inspiration_trigger || inspiration_triggered != True){
             ; Cast inspiration
             send {3}
             Sleep, 3500
-
-            ; Turn Meditation on
-            send {9}
 
             ; Set next trigger time
             inspiration_trigger := A_TickCount + inspiration_cooldown
@@ -128,19 +111,32 @@ ifMsgBox, OK
 
         }
         
-        if (snapcast_loop == True and A_TickCount > snapcast_trigger or snapcast_triggered != True){
+        if (snapcast_loop == True and A_TickCount > snapcast_trigger || snapcast_triggered != True){
+            ; Turn on Spellwalk
+            send {0}
+            Sleep, %cast_gap%
+            
             ; Snap cast
             send {1}
             Sleep, %cast_gap%
 
-            ; Advanced Magic Cast
-            send {4}
-            Sleep, %cast_gap%
+            ; Magic Cast
+            send {-}
+            Sleep, %cast_gap%          
 
-            ; Attempt to target a mob and cast
+            ; Target
             send {TAB}
             Sleep, %cast_gap%
+            
+            ; Use skill
             send {e}
+            send {e}
+            send {e}
+            Sleep, 3500, 5000
+ 
+            ; Turn off Spellwalk
+            send {0}
+            Sleep, 400, 600
 
             ; Set next trigger time
             snapcast_trigger := A_TickCount + snapcast_cooldown
