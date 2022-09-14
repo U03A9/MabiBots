@@ -72,8 +72,8 @@ ifMsgBox, OK
 
         ; Set up initial triggers before new loop
         inspiration_trigger := A_TickCount + inspiration_cooldown
-        snapcast_trigger := A_TickCount + snapcast_cooldown
-        crusader_trigger := A_TickCount + crusader_cooldown
+        snapcast_trigger := A_TickCount + (A_TickCount - inspiration_trigger) + snapcast_cooldown
+        crusader_trigger := A_TickCount + (A_TickCount - snapcast_trigger) + crusader_cooldown
 
         ; Randomize cast gap before new loop
         Random, cast_gap, 1250, 1500
@@ -94,7 +94,6 @@ ifMsgBox, OK
 
                 ; Lightning Shield
                 send {7}
-                Sleep, (shield_expiration_time)
 
             }
         }
@@ -104,8 +103,7 @@ ifMsgBox, OK
             send {3}
             Sleep, 3500
 
-            ; Set next trigger time
-            inspiration_trigger := A_TickCount + inspiration_cooldown
+            ; Set trigger
             inspiration_triggered := True
 
         }
@@ -129,22 +127,28 @@ ifMsgBox, OK
                 ; Ice Spear
                 if (current_spell == 0 || spell_triggered != True){
                     send {F5}
+                    Sleep, %cast_gap%
+
                     current_spell := 1
                     spell_triggered := True
 
                 ; Thunder
                 } else if (current_spell == 1){
                     send {F6}
+                    Sleep, %cast_gap%
+                    
                     current_spell := 2
 
                 ; Fireball
                 } else if (current_spell == 2){
                     send {F7}
+                    Sleep, %cast_gap%
+                    
                     current_spell := 0
 
                 }
             } else{
-                send {-}
+                send {2}
                 Sleep, %cast_gap%          
 
             }
@@ -161,8 +165,7 @@ ifMsgBox, OK
             send {0}
             Sleep, 400, 600
 
-            ; Set next trigger time
-            snapcast_trigger := A_TickCount + snapcast_cooldown
+            ; Set trigger
             snapcast_triggered := True
 
         }
@@ -190,8 +193,7 @@ ifMsgBox, OK
 
             }
 
-            ; Set next trigger time
-            crusader_trigger := A_TickCount + crusader_cooldown
+            ; Set trigger
             crusader_triggered := True
 
         }
