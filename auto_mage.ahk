@@ -75,9 +75,9 @@ start:
     Sleep 250
 
     ; Set up initial triggers
-    Random, inspiration_cooldown, 260000, 260500
-    Random, snapcast_cooldown, 120000, 120500
-    Random, crusader_cooldown, 20000, 20500
+    Random, inspiration_cooldown, 260000, 262500
+    Random, snapcast_cooldown, 90000, 92500
+    Random, crusader_cooldown, 20000, 22500
 
     inspiration_trigger := A_TickCount + inspiration_cooldown
     snapcast_trigger := A_TickCount + snapcast_cooldown
@@ -163,21 +163,22 @@ start:
         }
         
         if (Snapcast == True and A_TickCount > snapcast_trigger || snapcast_triggered != True){
-            ; Turn on Spellwalk
-            send {0}
-            Sleep, %cast_gap%
-
             ; Snap cast
             send {1}
             Sleep, %cast_gap%
 
             ; Magic Cast
-            if (SpellWalk == True){
-                ; This will instead cast skills in the following order to fulfill spellwalk training requirements
+            if (Spellwalk == True){
+                ; This will instead cast skills in the following order to fulfill Spellwalk training requirements
                 ; 0 - Ice Spear
                 ; 1 - Thunder
                 ; 2 - Fireball
                 ; 3 - Party Healing
+
+                ; Turn on Spellwalk
+                send {0}
+                Sleep, %cast_gap%
+
 
                 ; Ice Spear
                 if (current_spell == 0 || spell_triggered != True){
@@ -225,10 +226,12 @@ start:
             send {e}
             Sleep, 5500, 6500
 
-            ; Turn off Spellwalk
-            send {0}
-            Sleep, 400, 600
-
+            if (Spellwalk == True){
+                ; Turn off Spellwalk
+                send {0}
+                Sleep, 400, 600
+            }
+            
             ; Set trigger
             snapcast_triggered := True
             snapcast_trigger := A_TickCount + snapcast_cooldown
