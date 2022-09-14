@@ -78,9 +78,9 @@ start:
     loop{
 
         ; Set random intervals for skill casting before new loop
-        Random, inspiration_cooldown, 260000, 260500
-        Random, snapcast_cooldown, 120000, 120500
-        Random, crusader_cooldown, 20000, 20500
+        Random, inspiration_cooldown, 260000, 262500
+        Random, snapcast_cooldown, 90000, 92500
+        Random, crusader_cooldown, 20000, 22500
         
         ; Randomize cast gap before new loop
         Random, cast_gap, 1250, 1500
