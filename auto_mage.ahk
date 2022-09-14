@@ -13,8 +13,8 @@
 #NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
 ; #Warn  ; Enable warnings to assist with detecting common errors.
 
-If not A_IsAdmin
-    Run *RunAs "%A_AhkPath%" "%A_ScriptFullPath%" ; Run script as admin
+;If not A_IsAdmin
+ ;   Run *RunAs "%A_AhkPath%" "%A_ScriptFullPath%" ; Run script as admin
 
 
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
@@ -66,13 +66,13 @@ if (mana_burn == True){
 ifMsgBox, OK
 {
     ; Undo the assumed click (Ma    binogi ==sue).
-    MouseClick, Left, 1, 1, 1, 2, U
+   ; MouseClick, Left, 1, 1, 1, 2, U
 
     ; Pause to make sure the above worked.
-    Sleep 250
+    ;Sleep 250
     
     ; Select Mabinogi window
-    WinActivate, Mabinogi
+    ;WinActivate, Mabinogi
 
     ; Set up initial triggers
     inspiration_trigger := A_TickCount + inspiration_cooldown
@@ -120,7 +120,8 @@ ifMsgBox, OK
 
             ; Set trigger
             inspiration_triggered := True
-            inspiration_trigger = A_TickCount + (A_TickCount - inspiration_trigger) + inspiration_cooldown
+            elapsed_time := A_TickCount - inspiration_trigger
+            inspiration_trigger = A_TickCount + elapsed_time + inspiration_cooldown
 
         }
         
@@ -177,7 +178,7 @@ ifMsgBox, OK
             }
             
             ; Target
-            send {TAB}
+                send {TAB}
             Sleep, %cast_gap%
             
             ; Use skill
@@ -190,7 +191,8 @@ ifMsgBox, OK
 
             ; Set trigger
             snapcast_triggered := True
-            snapcast_trigger = A_TickCount + (A_TickCount - snapcast_trigger) + snapcast_cooldown
+            elapsed_time := A_TickCount - snapcast_trigger
+            snapcast_trigger = A_TickCount + elapsed_time + snapcast_cooldown
 
         }
 
@@ -226,7 +228,8 @@ ifMsgBox, OK
 
             ; Set trigger
             crusader_triggered := True
-            crusader_trigger = A_TickCount + (A_TickCount - crusader_trigger) + crusader_cooldown
+            elapsed_time := A_TickCount - crusader_trigger
+            crusader_trigger = A_TickCount + elapsed_time + crusader_cooldown
 
         }
     }
