@@ -24,15 +24,14 @@ Gui +LastFound +AlwaysOnTop +ToolWindow -Caption
 Gui, Font, s10, Lucida Console
 CustomColor := e8e8e8
 WinSet, TransColor, %CustomColor% 230
-Gui, Add, CheckBox, checked vMagicShield, Magic Shield Training
-Gui, Add, CheckBox, checked vInspiration, Inspiration Training
-Gui, Add, CheckBox, checked vBurnMana, -- Burn Mana to 10`%
-Gui, Add, CheckBox, checked vSnapcast, Snapcast + Spellwalk Training
-Gui, Add, CheckBox, checked vSpellwalk, -- Cycle Ice Spear, Lightning, Fireball
-Gui, Add, CheckBox, checked vCrusader, Crusader Training
+Gui, Add, CheckBox, vMagicShield, Magic Shield Training
+Gui, Add, CheckBox, vInspiration, Inspiration Training
+Gui, Add, CheckBox, vBurnMana, -- Burn Mana to 10`%
+Gui, Add, CheckBox, vSnapcast, Snapcast + Spellwalk Training
+Gui, Add, CheckBox, vSpellwalk, -- Cycle Ice Spear, Lightning, Fireball
+Gui, Add, CheckBox, vCrusader, Crusader Training
 Gui, Add, Text, , MabiBot `n  -- by CIDR
 Gui, Add, Button, gstart, Start
-Gui, Add, Button, gpause, Pause
 Gui, Add, Button, gquit, Quit
 
 ; Push gui to top right of screen
@@ -42,17 +41,10 @@ GuiWidth := 500, GuiHeight := 250
 gui,show, % "x" A_ScreenWidth - GuiWidth - sizeframe - cyborder " y"  cyborder " w" Guiwidth " h" GuiHeight
 return
 
-pause:
-	GuiControl, Enable, Start
-	GuiControl, Disable, Stop
-	paused := 1
-return
-
 start:
     Gui, Submit, NoHide
 	GuiControl, Enable, Stop
 	GuiControl, Disable, Start
-	paused := 0
 
     ; Alert user bot is starting
     if (BurnMana == True){
@@ -79,9 +71,9 @@ start:
     Random, snapcast_cooldown, 90000, 92500
     Random, crusader_cooldown, 20000, 22500
 
-    inspiration_trigger := A_TickCount + inspiration_cooldown
-    snapcast_trigger := A_TickCount + snapcast_cooldown
-    crusader_trigger := A_TickCount + crusader_cooldown
+    inspiration_trigger := A_TickCount
+    snapcast_trigger := A_TickCount
+    crusader_trigger := A_TickCount
 
     loop{
 
@@ -115,14 +107,9 @@ start:
                 send {8}
 
             }
-
-        ; Check if bot has been paused
-        if paused
-            return
-
         }
 
-        if (Inspiration == True and A_TickCount > inspiration_trigger || inspiration_triggered != True){
+        if (Inspiration == True and A_TickCount > inspiration_trigger){
             if (BurnMana == True){
                 ; Turn Mediation off
                 send {9}
@@ -153,16 +140,11 @@ start:
             Sleep, 3500
 
             ; Set trigger
-            inspiration_triggered := True
             inspiration_trigger := A_TickCount + inspiration_cooldown
-
-            ; Check if bot has been paused
-            if paused
-            return
 
         }
         
-        if (Snapcast == True and A_TickCount > snapcast_trigger || snapcast_triggered != True){
+        if (Snapcast == True and A_TickCount > snapcast_trigger){
             ; Snap cast
             send {1}
             Sleep, %cast_gap%
@@ -233,16 +215,11 @@ start:
             }
             
             ; Set trigger
-            snapcast_triggered := True
             snapcast_trigger := A_TickCount + snapcast_cooldown
-
-            ; Check if bot has been paused
-            if paused
-            return
 
         }
 
-        if (Crusader == True and A_TickCount > crusader_trigger || crusader_triggered != True){
+        if (Crusader == True and A_TickCount > crusader_trigger){
             ; This will loop through the various skills one at a time (since they share a cooldown)
             ; 0 - Shield
             ; 1 - Spike
@@ -287,13 +264,7 @@ start:
             }
 
             ; Set trigger
-            crusader_triggered := True
             crusader_trigger := A_TickCount + crusader_cooldown
-
-            ; Check if bot has been paused
-            if paused
-            return
-
 
         }
     }
