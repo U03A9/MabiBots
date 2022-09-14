@@ -193,6 +193,7 @@ ifMsgBox, OK
             
             ; Use skill
             send {e}
+            Sleep, %cast_gap%
             send {e}
             Sleep, 5500, 6500
  
@@ -229,6 +230,7 @@ ifMsgBox, OK
                 send {TAB}
                 Sleep, 850, 1250
                 send {e}
+                Sleep, %cast_gap%
                 send {e}
 
                 current_skill := 2
@@ -242,6 +244,7 @@ ifMsgBox, OK
                 send {TAB}
                 Sleep, 850, 1250
                 send {e}
+                Sleep, %cast_gap%
                 send {e}
                 
                 current_skill := 0
