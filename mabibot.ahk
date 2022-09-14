@@ -67,10 +67,6 @@ start:
     Sleep 250
 
     ; Set up initial triggers
-    Random, inspiration_cooldown, 260000, 262500
-    Random, snapcast_cooldown, 90000, 92500
-    Random, crusader_cooldown, 20000, 22500
-
     inspiration_trigger := A_TickCount
     snapcast_trigger := A_TickCount
     crusader_trigger := A_TickCount
@@ -78,7 +74,7 @@ start:
     loop{
 
         ; Set random intervals for skill casting before new loop
-        Random, inspiration_cooldown, 260000, 262500
+        Random, inspiration_cooldown, 180000, 182500
         Random, snapcast_cooldown, 90000, 92500
         Random, crusader_cooldown, 20000, 22500
         
