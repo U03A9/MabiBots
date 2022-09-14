@@ -115,23 +115,23 @@ ifMsgBox, OK
 
         if (inspiration_loop == True and A_TickCount > inspiration_trigger || inspiration_triggered != True){
             ; Cast inspiration
-            send {3}
+3            send {3}e
             Sleep, 3500
 
             ; Set trigger
             inspiration_triggered := True
             elapsed_time := A_TickCount - inspiration_trigger
-            inspiration_trigger = A_TickCount + elapsed_time + inspiration_cooldown
+            inspiration_trigger := A_TickCount + elapsed_time + inspiration_cooldown
 
         }
         
         if (snapcast_loop == True and A_TickCount > snapcast_trigger || snapcast_triggered != True){
             ; Turn on Spellwalk
-            send {0}
+            send {0}    s
             Sleep, %cast_gap%
 
             ; Snap cast
-            send {1}
+1            send {1}
             Sleep, %cast_gap%
 
             ; Magic Cast
@@ -192,7 +192,7 @@ ifMsgBox, OK
             ; Set trigger
             snapcast_triggered := True
             elapsed_time := A_TickCount - snapcast_trigger
-            snapcast_trigger = A_TickCount + elapsed_time + snapcast_cooldown
+            snapcast_trigger := A_TickCount + elapsed_time + snapcast_cooldown
 
         }
 
@@ -229,7 +229,7 @@ ifMsgBox, OK
             ; Set trigger
             crusader_triggered := True
             elapsed_time := A_TickCount - crusader_trigger
-            crusader_trigger = A_TickCount + elapsed_time + crusader_cooldown
+            crusader_trigger := A_TickCount + elapsed_time + crusader_cooldown
 
         }
     }
