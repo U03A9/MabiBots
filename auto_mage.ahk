@@ -74,18 +74,18 @@ ifMsgBox, OK
     ; Select Mabinogi window
     WinActivate, Mabinogi
 
-    ; Set random intervals for skill casting before new loop
-    Random, inspiration_cooldown, 260000, 260500
-    Random, snapcast_cooldown, 120000, 120500
-    Random, crusader_cooldown, 18000, 18500
-
-    ; Set up initial triggers before new loop
+    ; Set up initial triggers
     inspiration_trigger := A_TickCount + inspiration_cooldown
-    snapcast_trigger := A_TickCount + snapcast_cooldown
-    crusader_trigger := A_TickCount + crusader_cooldown
+    snapcast_trigger := A_TickCount + (A_TickCount - inspiration_trigger) + snapcast_cooldown
+    crusader_trigger := A_TickCount + (A_TickCount - snapcast_trigger) + crusader_cooldown
 
     loop{
 
+        ; Set random intervals for skill casting before new loop
+        Random, inspiration_cooldown, 260000, 260500
+        Random, snapcast_cooldown, 120000, 120500
+        Random, crusader_cooldown, 20000, 20500
+        
         ; Randomize cast gap before new loop
         Random, cast_gap, 1250, 1500
 
@@ -120,7 +120,7 @@ ifMsgBox, OK
 
             ; Set trigger
             inspiration_triggered := True
-            inspiration_trigger = A_TickCount + inspiration_cooldown
+            inspiration_trigger = A_TickCount + (A_TickCount - inspiration_trigger) + inspiration_cooldown
 
         }
         
@@ -190,7 +190,7 @@ ifMsgBox, OK
 
             ; Set trigger
             snapcast_triggered := True
-            snapcast_trigger = A_TickCount + snapcast_cooldown
+            snapcast_trigger = A_TickCount + (A_TickCount - snapcast_trigger) + snapcast_cooldown
 
         }
 
@@ -226,7 +226,7 @@ ifMsgBox, OK
 
             ; Set trigger
             crusader_triggered := True
-            crusader_trigger = A_TickCount + crusader_cooldown
+            crusader_trigger = A_TickCount + (A_TickCount - crusader_trigger) + crusader_cooldown
 
         }
     }
