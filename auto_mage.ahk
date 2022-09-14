@@ -130,8 +130,7 @@ ifMsgBox, OK
 
             ; Set trigger
             inspiration_triggered := True
-            elapsed_time := A_TickCount - inspiration_trigger
-            inspiration_trigger := A_TickCount + elapsed_time + inspiration_cooldown
+            inspiration_trigger := A_TickCount + inspiration_cooldown
 
         }
         
@@ -150,6 +149,7 @@ ifMsgBox, OK
                 ; 0 - Ice Spear
                 ; 1 - Thunder
                 ; 2 - Fireball
+                ; 3 - Party Healing
 
                 ; Ice Spear
                 if (current_spell == 0 || spell_triggered != True){
@@ -201,8 +201,7 @@ ifMsgBox, OK
 
             ; Set trigger
             snapcast_triggered := True
-            elapsed_time := A_TickCount - snapcast_trigger
-            snapcast_trigger := A_TickCount + elapsed_time + snapcast_cooldown
+            snapcast_trigger := A_TickCount + snapcast_cooldown
 
         }
 
@@ -238,8 +237,7 @@ ifMsgBox, OK
 
             ; Set trigger
             crusader_triggered := True
-            elapsed_time := A_TickCount - crusader_trigger
-            crusader_trigger := A_TickCount + elapsed_time + crusader_cooldown
+            crusader_trigger := A_TickCount + crusader_cooldown
 
         }
     }
