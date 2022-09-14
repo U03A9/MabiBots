@@ -39,21 +39,12 @@ InputBox, magic_mana_cost, Skill Charge Cost, "Please enter the mana cost for on
 ;Gui, Add, CheckBox, checked vvari1 x12 y10 w115, Field1
 ;Gui, Show
 
-; Set random intervals for skill casting
-Random, inspiration_cooldown, 260000, 260500
-Random, snapcast_cooldown, 120000, 120500
-
-; Set up initial triggers
-inspiration_trigger := A_TickCount + inspiration_cooldown
-snapcast_trigger := A_TickCount + snapcast_cooldown
-
 ; ######################################### ;
 ;  CHANGE ONLY SETTINGS BETWEEN THE LINEs. 
 
-shield_loop := True
 inspiration_loop := True
 snapcast_loop := True
-
+crusader_loop := True 
 ; ######################################### ;
 
 ; Prompt user to start
@@ -68,16 +59,24 @@ ifMsgBox, OK
 
     ; Pause to make sure the above worked.
     Sleep 250
+    
+    ; Select Mabinogi window
+    WinActivate, Mabinogi
 
     loop{
-        ; Select Mabinogi window
-        WinActivate, Mabinogi
 
-        ; Randomize timers before new loop
-        Random, cast_gap, 1250, 1500
+        ; Set random intervals for skill casting before new loop
         Random, inspiration_cooldown, 260000, 260500
-        Random, snapcast_cooldown, 125000, 127500
-        Random, shield_expiration_time, 13500, 14500
+        Random, snapcast_cooldown, 120000, 120500
+        Random, crusader_cooldown, 15000, 15500
+
+        ; Set up initial triggers before new loop
+        inspiration_trigger := A_TickCount + inspiration_cooldown
+        snapcast_trigger := A_TickCount + snapcast_cooldown
+        crusader_trigger := A_TickCount + crusader_cooldown
+
+        ; Randomize cast gap before new loop
+        Random, cast_gap, 1250, 1500
 
         if (shield_loop == True){
             ; Set script start time
@@ -121,16 +120,40 @@ ifMsgBox, OK
             Sleep, %cast_gap%
 
             ; Magic Cast
-            send {-}
-            Sleep, %cast_gap%          
+            if (spellwalk_adv_magic_training == True){
+                ; This will instead cast skills in the following order to fulfill spellwalk training requirements
+                ; 0 - Ice Spear
+                ; 1 - Thunder
+                ; 2 - Fireball
 
+                ; Ice Spear
+                if (current_spell == 0 || spell_triggered != True){
+                    send {F5}
+                    current_spell := 1
+                    spell_triggered := True
+
+                ; Thunder
+                } else if (current_spell == 1){
+                    send {F6}
+                    current_spell := 2
+
+                ; Fireball
+                } else if (current_spell == 2){
+                    send {F7}
+                    current_spell := 0
+
+                }
+            } else{
+                send {-}
+                Sleep, %cast_gap%          
+
+            }
+            
             ; Target
             send {TAB}
             Sleep, %cast_gap%
             
             ; Use skill
-            send {e}
-            send {e}
             send {e}
             Sleep, 3500, 5000
  
@@ -141,6 +164,35 @@ ifMsgBox, OK
             ; Set next trigger time
             snapcast_trigger := A_TickCount + snapcast_cooldown
             snapcast_triggered := True
+
+        }
+
+        if (crusader_loop == True and A_TickCount > crusader_trigger || crusader_triggered != True){
+            ; This will loop through the various skills one at a time (since they share a cooldown)
+            ; 0 - Shield
+            ; 1 - Spike
+            ; 2 - Sword
+
+            ; Shield
+            if (current_skill == 0){
+                send {5}
+                current_skill := 1
+
+            ; Spike
+            } else if (current_skill == 1){
+                send {6}
+                current_skill := 2
+
+            ; Sword
+            } else if (current_skill == 2){
+                send {7}
+                current_skill := 0
+
+            }
+
+            ; Set next trigger time
+            crusader_trigger := A_TickCount + crusader_cooldown
+            crusader_triggered := True
 
         }
     }
