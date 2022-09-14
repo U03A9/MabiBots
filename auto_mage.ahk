@@ -22,10 +22,6 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 CoordMode, Mouse, Client ; Easy coordinate mode.
 
 ; ========================================================================================= ;
-; Get user input
-InputBox, mana_pool, Total Mana, "Please enter the total amount of MP you have"
-InputBox, magic_mana_cost, Skill Charge Cost, "Please enter the mana cost for one charge of the skill in hotkey 4"
-
 
 ; CODE FOR GUI (Future)
 ;CustomColor = 000000
@@ -55,6 +51,10 @@ max_cast_count := Ceil(((mana_pool * .90) / magic_mana_cost))
 
 ; Alert user bot is starting
 if (mana_burn == True){
+    ; Get user input
+    InputBox, mana_pool, Total Mana, "Please enter the total amount of MP you have"
+    InputBox, magic_mana_cost, Skill Charge Cost, "Please enter the mana cost for one charge of the skill in hotkey 4"
+
     MsgBox, 1, AutoMage, Please verify your settings are correct`n`tTotal Mana %mana_pool%`n`tMana Cost of Skill %magic_mana_cost%`n`tWhen draining mana you will cast %max_cast_count% times
 
 } else{
