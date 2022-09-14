@@ -38,6 +38,7 @@ CoordMode, Mouse, Client ; Easy coordinate mode.
 ; ######################################### ;
 ;  CHANGE ONLY SETTINGS BETWEEN THE LINES. 
 
+shield_loop := False
 inspiration_loop := True
 snapcast_loop := True
 crusader_loop := True 
@@ -104,6 +105,10 @@ ifMsgBox, OK
 
                 ; Lightning Shield
                 send {7}
+                Sleep, (shield_expiration_time)
+
+                ; Natural shield
+                send {8}
 
             }
         }
@@ -123,7 +128,7 @@ ifMsgBox, OK
             ; Turn on Spellwalk
             send {0}
             Sleep, %cast_gap%
-            
+
             ; Snap cast
             send {1}
             Sleep, %cast_gap%
@@ -155,6 +160,13 @@ ifMsgBox, OK
                     send {F7}
                     Sleep, %cast_gap%
                     
+                    current_spell := 3
+                
+                ; Party Healing
+                } else if (current_speel == 3){
+                    send {F8}
+                    Sleep, %cast_gap%
+                    
                     current_spell := 0
 
                 }
@@ -170,7 +182,7 @@ ifMsgBox, OK
             
             ; Use skill
             send {e}
-            Sleep, 3500, 5000
+            Sleep, 5500, 6500
  
             ; Turn off Spellwalk
             send {0}
@@ -191,17 +203,23 @@ ifMsgBox, OK
             ; Shield
             if (current_skill == 0 || skill_triggered != True){
                 send {5}
+                Sleep, %cast_gap%
+
                 current_skill := 1
                 skill_triggered := True
 
             ; Spike
             } else if (current_skill == 1){
                 send {6}
+                Sleep, %cast_gap%
+
                 current_skill := 2
 
             ; Sword
             } else if (current_skill == 2){
                 send {7}
+                Sleep, %cast_gap%
+
                 current_skill := 0
 
             }
