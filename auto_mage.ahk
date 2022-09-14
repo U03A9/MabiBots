@@ -77,7 +77,7 @@ ifMsgBox, OK
     ; Set random intervals for skill casting before new loop
     Random, inspiration_cooldown, 260000, 260500
     Random, snapcast_cooldown, 120000, 120500
-    Random, crusader_cooldown, 15000, 15500
+    Random, crusader_cooldown, 18000, 18500
 
     ; Set up initial triggers before new loop
     inspiration_trigger := A_TickCount + inspiration_cooldown
