@@ -40,18 +40,28 @@ InputBox, magic_mana_cost, Skill Charge Cost, "Please enter the mana cost for on
 ;Gui, Show
 
 ; ######################################### ;
-;  CHANGE ONLY SETTINGS BETWEEN THE LINEs. 
+;  CHANGE ONLY SETTINGS BETWEEN THE LINES. 
 
 inspiration_loop := True
 snapcast_loop := True
 crusader_loop := True 
+spellwalk_adv_magic_training := True
+mana_burn := False
+
 ; ######################################### ;
 
 ; Prompt user to start
 max_cast_count := Ceil(((mana_pool * .90) / magic_mana_cost))
 
 ; Alert user bot is starting
-MsgBox, 1, AutoMage, Please verify your settings are correct`n`tTotal Mana %mana_pool%`n`tMana Cost of Skill %magic_mana_cost%`n`tWhen draining mana you will cast %max_cast_count% times
+if (mana_burn == True){
+    MsgBox, 1, AutoMage, Please verify your settings are correct`n`tTotal Mana %mana_pool%`n`tMana Cost of Skill %magic_mana_cost%`n`tWhen draining mana you will cast %max_cast_count% times
+
+} else{
+    MsgBox, 1, AutoMage, Please verify your settings are correct`n`tManaburn Off
+
+}
+
 ifMsgBox, OK
 {
     ; Undo the assumed click (Ma    binogi ==sue).
@@ -63,17 +73,17 @@ ifMsgBox, OK
     ; Select Mabinogi window
     WinActivate, Mabinogi
 
+    ; Set random intervals for skill casting before new loop
+    Random, inspiration_cooldown, 260000, 260500
+    Random, snapcast_cooldown, 120000, 120500
+    Random, crusader_cooldown, 15000, 15500
+
+    ; Set up initial triggers before new loop
+    inspiration_trigger := A_TickCount + inspiration_cooldown
+    snapcast_trigger := A_TickCount + snapcast_cooldown
+    crusader_trigger := A_TickCount + crusader_cooldown
+
     loop{
-
-        ; Set random intervals for skill casting before new loop
-        Random, inspiration_cooldown, 260000, 260500
-        Random, snapcast_cooldown, 120000, 120500
-        Random, crusader_cooldown, 15000, 15500
-
-        ; Set up initial triggers before new loop
-        inspiration_trigger := A_TickCount + inspiration_cooldown
-        snapcast_trigger := A_TickCount + (A_TickCount - inspiration_trigger) + snapcast_cooldown
-        crusader_trigger := A_TickCount + (A_TickCount - snapcast_trigger) + crusader_cooldown
 
         ; Randomize cast gap before new loop
         Random, cast_gap, 1250, 1500
@@ -98,13 +108,14 @@ ifMsgBox, OK
             }
         }
 
-        if (inspiration_loop == True and A_TickCount >= inspiration_trigger || inspiration_triggered != True){
+        if (inspiration_loop == True and A_TickCount > inspiration_trigger || inspiration_triggered != True){
             ; Cast inspiration
             send {3}
             Sleep, 3500
 
             ; Set trigger
             inspiration_triggered := True
+            inspiration_trigger = A_TickCount + inspiration_cooldown
 
         }
         
@@ -167,6 +178,7 @@ ifMsgBox, OK
 
             ; Set trigger
             snapcast_triggered := True
+            snapcast_trigger = A_TickCount + snapcast_cooldown
 
         }
 
@@ -195,6 +207,7 @@ ifMsgBox, OK
 
             ; Set trigger
             crusader_triggered := True
+            crusader_trigger = A_TickCount + crusader_cooldown
 
         }
     }
