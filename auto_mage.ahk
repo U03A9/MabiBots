@@ -189,9 +189,10 @@ ifMsgBox, OK
             ; 2 - Sword
 
             ; Shield
-            if (current_skill == 0){
+            if (current_skill == 0 || skill_triggered != True){
                 send {5}
                 current_skill := 1
+                skill_triggered := True
 
             ; Spike
             } else if (current_skill == 1){
