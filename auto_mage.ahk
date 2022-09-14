@@ -224,12 +224,22 @@ ifMsgBox, OK
                 send {6}
                 Sleep, %cast_gap%
 
+                ; Target and use
+                send {TAB}
+                Sleep, 250, 350
+                send {e}
+                
                 current_skill := 2
 
             ; Sword
             } else if (current_skill == 2){
                 send {7}
                 Sleep, %cast_gap%
+
+                ; Target and use
+                send {TAB}
+                Sleep, 250, 350
+                send {e}
 
                 current_skill := 0
 
