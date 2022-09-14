@@ -34,7 +34,12 @@ Gui, Add, Text, , MabiBot `n  -- by CIDR
 Gui, Add, Button, gstart, Start
 Gui, Add, Button, gpause, Pause
 Gui, Add, Button, gquit, Quit
-Gui, show, x467 y200 w400 h250
+
+; Push gui to top right of screen
+SysGet, sizeframe, 33
+SysGet, cyborder, 8
+GuiWidth := 500, GuiHeight := 250
+gui,show, % "x" A_ScreenWidth - GuiWidth - sizeframe - cyborder " y"  cyborder " w" Guiwidth " h" GuiHeight
 return
 
 pause:
