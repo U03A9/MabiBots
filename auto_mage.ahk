@@ -23,17 +23,61 @@ CoordMode, Mouse, Client ; Easy coordinate mode.
 
 ; ========================================================================================= ;
 
-; CODE FOR GUI (Future)
-;CustomColor = 000000
-;Gui +LastFound +AlwaysOnTop +ToolWindow -Caption
-;Gui, Color, %CustomColor%
-;Gui, Font, s10, Lucida Console
+; Set up GUI
+CustomColor = 000000
+Gui +LastFound +AlwaysOnTop +ToolWindow -Caption
+Gui, Color, %CustomColor%
+Gui, Font, s10, Lucida Console
 ; 
-;Gui, Add, Text, x50 y0 w385 BackgroundTrans 0x5
-;Gui, Add, Text, x50 y0 w385 BackgroundTrans cWhite, AutoMage Bot is Off
-;WinSet, TransColor, %CustomColor% 230
-;Gui, Add, CheckBox, checked vvari1 x12 y10 w115, Field1
-;Gui, Show
+Gui, Add, Text, x50 y0 w385 BackgroundTrans 0x5
+Gui, Add, Text, x50 y0 w385 BackgroundTrans cWhite, AutoMage Bot is Off
+WinSet, TransColor, %CustomColor% 230
+Gui, Add, CheckBox, checked vvari1 x12 y10 w115 , Field1
+Gui, Add, CheckBox,  vvari2 x12 y30 w115 , Field2
+Gui, Add, CheckBox, checked vvari3 x12 y50 w115 , Field3
+Gui, Add, CheckBox, checked vvari4 x12 y70 w115 , Field4
+Gui, Add, CheckBox, checked vvari5 x12 y90 w115 , Field5
+Gui, Add, CheckBox, checked vvari6 x12 y110 w135 , Field6
+Gui, Add, CheckBox, checked vvari7 x152 y10 w60 , Field7
+Gui, Add, CheckBox, checked vvari8 x152 y30 w60 , Field8
+Gui, Add, CheckBox, checked vvari9 x152 y50 w60 , Field9
+Gui, Add, CheckBox, checked vvari10 x152 y70 w60 , Field10
+Gui, Add, CheckBox, checked vvari11 x152 y90 w60 , Field11
+Gui, Add, CheckBox, checked vvari12 x152 y110 w60 , Field12
+Gui, Add, Button, x220 y70 w80 h20 gcheck , Check
+Gui, Add, Text, x220 y40 w100 h30 , Initialize before starting new coo
+Gui, Add, Button, x336 y30 w100 h30 , Start/Save filename (Ctrl+1)
+Gui, Add, Button, x336 y90 w100 h30 , Regular/No Save Start! (Ctrl+2)
+
+Gui, show, x137 y89 h130 w455
+return
+
+stop:
+	GuiControl, Enable, Start
+	GuiControl, Disable, Stop
+	stopped := 1
+return
+
+again:
+	GuiControl, Enable, Stop
+	GuiControl, Disable, Start
+	stopped := 0
+	loop {
+		MouseMove, 20, 30, 50, R
+		sleep, 2000
+		if stopped
+			return
+		MouseMove, -20, -30, 50, R
+		sleep, 2000
+		if stopped
+			return
+	}
+return
+
+over:
+GuiClose:
+GuiEscape:
+ExitApp
 
 ; ######################################### ;
 ;  CHANGE ONLY SETTINGS BETWEEN THE LINES. 
