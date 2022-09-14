@@ -13,8 +13,8 @@
 #NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
 ; #Warn  ; Enable warnings to assist with detecting common errors.
 
-;If not A_IsAdmin
-;    Run *RunAs "%A_AhkPath%" "%A_ScriptFullPath%" ; Run script as admin
+If not A_IsAdmin
+    Run *RunAs "%A_AhkPath%" "%A_ScriptFullPath%" ; Run script as admin
 
 
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
@@ -78,7 +78,7 @@ ifMsgBox, OK
     Sleep 250
     
     ; Select Mabinogi window
-    ;WinActivate, Mabinogi
+    WinActivate, Mabinogi
 
     ; Set up initial triggers
     Random, inspiration_cooldown, 260000, 260500
