@@ -8,13 +8,13 @@
 ;
 ; v1.0.0
 
-#SingleInstance Force \; Only allow one instance
+#SingleInstance Force ; Only allow one instance
 #UseHook ; Improves response time of key presses
 #NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
 ; #Warn  ; Enable warnings to assist with detecting common errors.
 
 ;If not A_IsAdmin
- ;   Run *RunAs "%A_AhkPath%" "%A_ScriptFullPath%" ; Run script as admin
+;    Run *RunAs "%A_AhkPath%" "%A_ScriptFullPath%" ; Run script as admin
 
 
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
@@ -49,6 +49,12 @@ mana_burn := False
 
 ; Prompt user to start
 max_cast_count := Ceil(((mana_pool * .90) / magic_mana_cost))
+test := 1
+test2 := A_TickCount
+test3 := test + 9
+test4 := A_TickCount + 9
+test5 := A_TickCount + 9 + 9
+test6 := A_TickCount - test4 - test3
 
 ; Alert user bot is starting
 if (mana_burn == True){
@@ -66,18 +72,22 @@ if (mana_burn == True){
 ifMsgBox, OK
 {
     ; Undo the assumed click (Ma    binogi ==sue).
-   ; MouseClick, Left, 1, 1, 1, 2, U
+    MouseClick, Left, 1, 1, 1, 2, U
 
     ; Pause to make sure the above worked.
-    ;Sleep 250
+    Sleep 250
     
     ; Select Mabinogi window
     ;WinActivate, Mabinogi
 
     ; Set up initial triggers
+    Random, inspiration_cooldown, 260000, 260500
+    Random, snapcast_cooldown, 120000, 120500
+    Random, crusader_cooldown, 20000, 20500
+
     inspiration_trigger := A_TickCount + inspiration_cooldown
-    snapcast_trigger := A_TickCount + (A_TickCount - inspiration_trigger) + snapcast_cooldown
-    crusader_trigger := A_TickCount + (A_TickCount - snapcast_trigger) + crusader_cooldown
+    snapcast_trigger := A_TickCount + snapcast_cooldown
+    crusader_trigger := A_TickCount + crusader_cooldown
 
     loop{
 
@@ -115,7 +125,7 @@ ifMsgBox, OK
 
         if (inspiration_loop == True and A_TickCount > inspiration_trigger || inspiration_triggered != True){
             ; Cast inspiration
-3            send {3}e
+            send {3}
             Sleep, 3500
 
             ; Set trigger
@@ -127,11 +137,11 @@ ifMsgBox, OK
         
         if (snapcast_loop == True and A_TickCount > snapcast_trigger || snapcast_triggered != True){
             ; Turn on Spellwalk
-            send {0}    s
+            send {0}
             Sleep, %cast_gap%
 
             ; Snap cast
-1            send {1}
+            send {1}
             Sleep, %cast_gap%
 
             ; Magic Cast
@@ -178,7 +188,7 @@ ifMsgBox, OK
             }
             
             ; Target
-                send {TAB}
+            send {TAB}
             Sleep, %cast_gap%
             
             ; Use skill
