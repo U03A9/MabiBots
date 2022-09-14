@@ -193,6 +193,7 @@ ifMsgBox, OK
             
             ; Use skill
             send {e}
+            send {e}
             Sleep, 5500, 6500
  
             ; Turn off Spellwalk
@@ -226,9 +227,10 @@ ifMsgBox, OK
 
                 ; Target and use
                 send {TAB}
-                Sleep, 250, 350
+                Sleep, 850, 1250
                 send {e}
-                
+                send {e}
+
                 current_skill := 2
 
             ; Sword
@@ -238,9 +240,10 @@ ifMsgBox, OK
 
                 ; Target and use
                 send {TAB}
-                Sleep, 250, 350
+                Sleep, 850, 1250
                 send {e}
-
+                send {e}
+                
                 current_skill := 0
 
             }
